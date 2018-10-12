@@ -294,7 +294,7 @@ Alfa *excluiContato(Alfa *a, Favoritos *f){
 	for(;strcmp(p->nome, nome)!=0; p=p->prox);
 	if(f!=NULL){
 		for(ff=f; strcmp(ff->favorito->nome, p->nome)!=0 && ff->prox!= NULL; ff=ff->prox);
-	//	printf("%c", ff->favorito->nome[0]);
+	
 		if(strcmp(ff->favorito->nome, p->nome)){
 			f=excluiFavorito(ff);
 		}
@@ -309,14 +309,10 @@ Alfa *excluiContato(Alfa *a, Favoritos *f){
 			free(k);
 			return NULL;
 		}
-		if(k->ant==NULL){
-			printf("aqui\n");
-			k->prox->ant=NULL;		
-			printf("%c\n", k->prox->letra);
+		if(k->ant==NULL){			
+			k->prox->ant=NULL;			
 			n=k->prox;
-			free(k);
-			
-			printf("%c\n", k->prox->letra);
+			free(k);		
 			return n;
 		}
 		if(k->prox==NULL){

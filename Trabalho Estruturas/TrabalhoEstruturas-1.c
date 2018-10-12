@@ -25,12 +25,12 @@ main(){
 		printf("5. Exibir favoritos.\n");
 		printf("6. Excluir favorito.\n");
 		printf("7. Excluir contato.\n");
-		printf("9. Sair.\n");
+		printf("8. Sair.\n");
 	
 		scanf("%d",&x);
 		switch(x){
 			case 1:{
-			//	c=entrar(c,a);
+		
 				fflush(stdin);
 				a=ordemAlfa(a);
 				fflush(stdin);
@@ -76,10 +76,11 @@ main(){
 			}
 			case 7:{
 				a=excluiContato(a,f);
+				if(sizeof(f)!= sizeof(Favoritos))f=NULL;		
 				break;
 			}
 			
-			case 9:{
+			case 8:{
 				printf("\nSaindo...\n");
 				resp++;
 				break;
