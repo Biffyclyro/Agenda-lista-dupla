@@ -190,7 +190,7 @@ Favoritos *addFavoritos(Favoritos *f, Alfa *a){
 	strupr(nFavorito);
 	for(k=a; k->letra < nFavorito[0]; k=k->prox);
 	
-	for(p=k->raiz; strcmp(nFavorito, p->nome)!=0; p=p->prox)puts(p->nome);
+	for(p=k->raiz; strcmp(nFavorito, p->nome)!=0; p=p->prox);
 	
 	if(f==NULL){
 		novo=(Favoritos*) malloc(sizeof(Favoritos));
@@ -200,7 +200,7 @@ Favoritos *addFavoritos(Favoritos *f, Alfa *a){
 		return novo;
 	}else{
 		for(s=f; s->prox!=NULL; s=s->prox);	
-		puts(p->nome);
+	
 		novo=(Favoritos*) malloc(sizeof(Favoritos));
 		novo->favorito=p;
 		novo->ant=s;
@@ -240,7 +240,7 @@ void exibeTudo(Alfa *a){
 }
 
 Favoritos *excluiFavorito(Favoritos *f){
-	Favoritos *ff;
+	Favoritos *ff, *f2;
 	char nome[50];
 	printf("Entre com o nome do favorito:\n");
 	fflush(stdin);
@@ -255,10 +255,11 @@ Favoritos *excluiFavorito(Favoritos *f){
 	}
 	if(ff->ant==NULL){		
 		
+		ff->prox->ant=NULL;
+		f2=ff->prox;
 		free(ff);
-		ff=ff->prox;
-		ff->ant=NULL;
-		return ff;
+		
+		return f2;
 	}
 
 	for(; strcmp(ff->favorito->nome, nome)!=0; ff=ff->prox);
@@ -278,27 +279,67 @@ Favoritos *excluiFavorito(Favoritos *f){
 }
 
 
-Alfa *excluiContato(Alfa *a, Favoritos *f){
+
+
+
+Favoritos *excluiFavoritoDentro(Favoritos *f, char nomeTest[50]){
+	Favoritos *ff, *f2;
+	char nome[50];
+	
+	fflush(stdin);
+	strcpy(nome, nomeTest);
+	strupr(nome);
+	ff=f;
+	
+	if(ff->ant==NULL && ff->prox==NULL){
+		
+		free(ff);
+		return NULL;
+		
+	}
+	if(ff->ant==NULL){
+			
+		ff->prox->ant=NULL;
+		f2=ff->prox;
+		free(ff);
+		
+		return f2;
+	}
+
+	for(; strcmp(ff->favorito->nome, nome)!=0; ff=ff->prox);
+	puts(ff->favorito->nome);
+	
+	if(ff->prox==NULL){
+		ff->ant->prox=NULL;		
+		free(ff);
+		return f;
+	}else{
+		ff->ant->prox=ff->prox;
+		ff->prox->ant=ff->ant;
+		free(ff);
+		return f;
+	}	
+	
+}
+
+
+
+Alfa *excluiContato(Alfa *a, char nomeTest[50]){
 	Contato *p;
 	Alfa *k, *n;
-	Favoritos *ff;
+	
 	char nome[50];
-	printf("Entre com o nome do contato\n");
+	
 	fflush(stdin);
-	gets(nome);
+	strcpy(nome, nomeTest);
 	strupr(nome);
+
 	k=a;
 	for(; k->letra != nome[0]; k=k->prox);
 	
 	p=k->raiz;
 	for(;strcmp(p->nome, nome)!=0; p=p->prox);
-	if(f!=NULL){
-		for(ff=f; strcmp(ff->favorito->nome, p->nome)!=0 && ff->prox!= NULL; ff=ff->prox);
 	
-		if(strcmp(ff->favorito->nome, p->nome)){
-			f=excluiFavorito(ff);
-		}
-	}
 	
 	if(p->prox == NULL && p->ant==NULL){
 		free(p);
@@ -357,7 +398,14 @@ void imprimeFavoritos(Favoritos *f){
 		return;
 	}
 	
-	for(; ff!= NULL; ff=ff->prox)puts(ff->favorito->nome);
+	for(; ff!= NULL; ff=ff->prox){
+		printf("\n");
+		puts(ff->favorito->nome);
+		puts(ff->favorito->sobreNome);
+		puts(ff->favorito->email);
+		printf("%d\n", ff->favorito->tel);
+		printf("\n");
+	}
 	return;
 	
 	

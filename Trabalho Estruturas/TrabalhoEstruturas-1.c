@@ -10,7 +10,8 @@ main(){
 	int resp=0;
 	Contato *c;
 	Alfa *a;
-	Favoritos *f;
+	Favoritos *f, *ff;
+	char nomeTest[50];
 	c=NULL;
 	a=NULL;
 	f=NULL;
@@ -75,8 +76,24 @@ main(){
 				break;
 			}
 			case 7:{
-				a=excluiContato(a,f);
-				if(sizeof(f)!= sizeof(Favoritos))f=NULL;		
+				printf("Entre com o nome do contato\n");
+				fflush(stdin);
+				gets(nomeTest);
+				fflush(stdin);
+				if(f!=NULL){
+					if(f->ant==NULL){
+						f=excluiFavoritoDentro(f, nomeTest);
+					}else{
+					
+						for(ff=f; strcmp(ff->favorito->nome, nomeTest)!=0 && ff->prox!= NULL; ff=ff->prox);
+													
+							f=excluiFavoritoDentro(ff, nomeTest);
+					}
+				}			
+				
+				a=excluiContato(a, nomeTest);			
+				
+						
 				break;
 			}
 			
