@@ -99,7 +99,7 @@ main(){
 			
 			case 8:{
 				printf("\nSaindo...\n");
-				resp++;
+				++resp;
 				break;
 			}
 			
